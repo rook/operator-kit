@@ -1,0 +1,10 @@
+package: github.com/rook/operator-kit/example
+import:
+- package: github.com/coreos/pkg
+  subpackages:
+  - capnslog
+- package: github.com/rook/operator-kit
+- package: k8s.io/client-go
+  version: 76153773eaa3a268131d3d993290a194a1370585
+- package: k8s.io/apimachinery
+  version: c1c4a7fe832857c75cc1d79c8e40d71d5da15fc6

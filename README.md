@@ -4,6 +4,7 @@ A Kubernetes Operator is a controller for custom resources. The purpose of the o
 library for implementing operators. 
 
 The library originated from the Rook operator. Much more thought needs to be put into API design, but at least provides the basis for the library with working code.
+With enough interest, this could become a Kubernetes incubator project.
 
 ### Features
 The operator kit is a simple collection of features that will be useful for operators.
@@ -13,15 +14,15 @@ The operator kit is a simple collection of features that will be useful for oper
 
 ### Roadmap 
 The operator kit is still in its infancy and needs plenty of work before it is considered stable. 
-- Community collaboration on the requirements and design. What we have today is code that is only used
-by a single operator. 
+- Community collaboration on the requirements and design
 - Add support for CustomResourceDefinitions (CRDs) with Kubernetes 1.7
 - Leader election for HA
+- Tests
 
 The conversation has been started [here](https://docs.google.com/document/d/1NJhFcNezJyLM952eaYVcdfIQFQYWsAx4oTaA82-Frdk).
 
-## Example
-
+## Sample Code
+To help you get started, a simple operator with a single custom resource is provided [here](sample/README.md).
 
 ## Contributing
 
