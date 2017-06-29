@@ -22,7 +22,7 @@ The operator kit is still in its infancy and needs plenty of work before it is c
 The conversation has been started [here](https://docs.google.com/document/d/1NJhFcNezJyLM952eaYVcdfIQFQYWsAx4oTaA82-Frdk).
 
 ## Sample Code
-To help you get started, a simple operator with a single custom resource is provided [here](sample/README.md).
+To help you get started, a simple operator with a single custom resource is provided [here](sample-operator/README.md).
 
 ## Contributing
 
