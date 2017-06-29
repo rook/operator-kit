@@ -26,7 +26,7 @@ kubectl create -f sample-resource.yaml
 ```
 
 ### Modify the Sample Resource
-Change the value of the `Hello` property in the operator, then apply the new yaml.
+Change the value of the `Hello` property in `sample-resource.yaml`, then apply the new yaml.
 ```bash
 kubectl apply -f sample-resource.yaml
 ```
