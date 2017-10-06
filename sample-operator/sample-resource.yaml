@@ -3,4 +3,4 @@ kind: Sample
 metadata:
   name: mysample
 spec:
-  Hello: World
+  hello: world
