@@ -1,6 +1,4 @@
 /*
-Package kit for Kubernetes operators
-
 Copyright 2016 The Rook Authors. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,33 +16,46 @@ limitations under the License.
 Some of the code below came from https://github.com/coreos/etcd-operator
 which also has the apache 2.0 license.
 */
+
+// Package kit for Kubernetes operators
 package operatorkit
 
 import (
+	"github.com/coreos/pkg/capnslog"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/runtime/serializer"
-	"k8s.io/client-go/pkg/api"
 	"k8s.io/client-go/rest"
 )
 
-// NewHTTPClient creates a new http client for the operator to manage the Kubernetes cluster
-func NewHTTPClient(group string) (*rest.RESTClient, error) {
+const (
+	serverVersionV170 = "v1.7.0"
+)
+
+var logger = capnslog.NewPackageLogger("github.com/rook/operator-kit", "opkit")
+
+// NewHTTPClient creates a Kubernetes client to interact with API extensions for Custom Resources
+func NewHTTPClient(group, version string, schemeBuilder runtime.SchemeBuilder) (*rest.RESTClient, *runtime.Scheme, error) {
+	scheme := runtime.NewScheme()
+	if err := schemeBuilder.AddToScheme(scheme); err != nil {
+		return nil, nil, err
+	}
+
 	config, err := rest.InClusterConfig()
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	config.GroupVersion = &schema.GroupVersion{
-		Group: group,
-	}
+	config.GroupVersion = &schema.GroupVersion{Group: group, Version: version}
+
 	config.APIPath = "/apis"
 	config.ContentType = runtime.ContentTypeJSON
-	config.NegotiatedSerializer = serializer.DirectCodecFactory{CodecFactory: api.Codecs}
+	config.NegotiatedSerializer = serializer.DirectCodecFactory{CodecFactory: serializer.NewCodecFactory(scheme)}
 
-	restcli, err := rest.RESTClientFor(config)
+	client, err := rest.RESTClientFor(config)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	return restcli, nil
+
+	return client, scheme, nil
 }

@@ -8,14 +8,14 @@ With enough interest, this could become a Kubernetes incubator project.
 
 ### Features
 The operator kit is a simple collection of features that will be useful for operators.
-- **TPR handling**: creating, retrieving, and watching TPRs
+- **CRD handling**: creating, retrieving, and watching CRDs on K8s 1.7+
+- **TPR handling**: creating, retrieving, and watching TPRs on versions prior to 1.7
 - **Timing**: helpers to timeout when taking too long or retry when when working with kubernetes resources
 
 
 ### Roadmap 
 The operator kit is still in its infancy and needs plenty of work before it is considered stable. 
 - Community collaboration on the requirements and design
-- Add support for CustomResourceDefinitions (CRDs) with Kubernetes 1.7
 - Leader election for HA
 - Tests
 

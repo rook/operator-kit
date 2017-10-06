@@ -1,6 +1,4 @@
 /*
-Package kit for Kubernetes operators
-
 Copyright 2016 The Rook Authors. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,19 +16,24 @@ limitations under the License.
 Some of the code below came from https://github.com/coreos/etcd-operator
 which also has the apache 2.0 license.
 */
+
+// Package main for a sample operator
 package main
 
 import (
 	"fmt"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/coreos/pkg/capnslog"
 	opkit "github.com/rook/operator-kit"
+	"k8s.io/api/core/v1"
+	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 )
-
-const resourceGroup = "mycompany.io"
 
 var logger = capnslog.NewPackageLogger("github.com/rook/operator-kit", "sample")
 
@@ -42,20 +45,36 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Create and wait for CRD resources
 	logger.Infof("Creating the sample resource")
-	err = opkit.CreateCustomResources(*context, []opkit.CustomResource{sampleResource})
+	resources := []opkit.CustomResource{sampleResource}
+	err = opkit.CreateCustomResources(*context, resources)
 	if err != nil {
-		logger.Errorf("failed to create custom resource. %+v\n", err)
+		logger.Errorf("failed to create custom resource. %+v", err)
 		os.Exit(1)
 	}
 
+	// create signals to stop watching the resources
+	signalChan := make(chan os.Signal, 1)
+	stopChan := make(chan struct{})
+	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
+
 	// start watching the sample resource
 	logger.Infof("Managing the sample resource")
-	mgr := &sampleManager{namespace: "default", context: *context}
-	mgr.Manage()
+	controller := newSampleController(context)
+	controller.StartWatch(v1.NamespaceAll, stopChan)
+
+	for {
+		select {
+		case <-signalChan:
+			logger.Infof("shutdown signal received, exiting...")
+			close(stopChan)
+			return
+		}
+	}
 }
 
-func createContext() (*opkit.KubeContext, error) {
+func createContext() (*opkit.Context, error) {
 	// create the k8s client
 	config, err := rest.InClusterConfig()
 	if err != nil {
@@ -67,17 +86,16 @@ func createContext() (*opkit.KubeContext, error) {
 		return nil, fmt.Errorf("failed to get k8s client. %+v", err)
 	}
 
-	// initialize the sample resource
-	httpCli, err := opkit.NewHTTPClient(resourceGroup)
+	apiExtClientset, err := apiextensionsclient.NewForConfig(config)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create http client. %+v", err)
+		return nil, fmt.Errorf("failed to create k8s API extension clientset. %+v", err)
 	}
 
-	return &opkit.KubeContext{
-		MasterHost:  config.Host,
-		Clientset:   clientset,
-		KubeHTTPCli: httpCli.Client,
-		RetryDelay:  6,
-		MaxRetries:  15,
+	return &opkit.Context{
+		Clientset:             clientset,
+		APIExtensionClientset: apiExtClientset,
+		Interval:              500 * time.Millisecond,
+		Timeout:               60 * time.Second,
 	}, nil
+
 }
