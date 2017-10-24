@@ -1,9 +1,8 @@
-package: github.com/rook/operator-kit/sample-operator
+package: github.com/rook/operator-kit
 import:
 - package: github.com/coreos/pkg
   subpackages:
   - capnslog
-- package: github.com/rook/operator-kit
 - package: k8s.io/client-go
   version: 42a124578af9e61f5c6902fa7b6b2cb6538f17d2
 - package: k8s.io/apimachinery
