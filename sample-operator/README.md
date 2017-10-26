@@ -4,10 +4,13 @@ The sample operator creates a custom resources and watches for changes.
 
 ### Build
 ```bash
-# pull all the libraries needed (this may take a while with all the Kubernetes dependencies)
-glide install
+# pull all the libraries needed for operator-kit (this may take a while with all the Kubernetes dependencies)
+glide install  --strip-vendor
 
-# build the go binary
+# change directory to sample-operator
+cd sample-operator
+
+# build the sample operator binary
 CGO_ENABLED=0 GOOS=linux go build
 
 # build the docker container
