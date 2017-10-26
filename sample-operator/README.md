@@ -5,7 +5,7 @@ The sample operator creates a custom resources and watches for changes.
 ### Build
 ```bash
 # pull all the libraries needed for operator-kit (this may take a while with all the Kubernetes dependencies)
-glide install  --strip-vendor
+dep ensure
 
 # change directory to sample-operator
 cd sample-operator
