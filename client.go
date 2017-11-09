@@ -36,13 +36,18 @@ var logger = capnslog.NewPackageLogger("github.com/rook/operator-kit", "opkit")
 
 // NewHTTPClient creates a Kubernetes client to interact with API extensions for Custom Resources
 func NewHTTPClient(group, version string, schemeBuilder runtime.SchemeBuilder) (rest.Interface, *runtime.Scheme, error) {
-	scheme := runtime.NewScheme()
-	if err := schemeBuilder.AddToScheme(scheme); err != nil {
+	config, err := rest.InClusterConfig()
+	if err != nil {
 		return nil, nil, err
 	}
 
-	config, err := rest.InClusterConfig()
-	if err != nil {
+	return NewHTTPClientFromConfig(group, version, schemeBuilder, config)
+}
+
+// NewHTTPClient creates a Kubernetes client from a given Kubernetes *rest.Config to interact with API extensions for Custom Resources
+func NewHTTPClientFromConfig(group, version string, schemeBuilder runtime.SchemeBuilder, config *rest.Config) (rest.Interface, *runtime.Scheme, error) {
+	scheme := runtime.NewScheme()
+	if err := schemeBuilder.AddToScheme(scheme); err != nil {
 		return nil, nil, err
 	}
 
