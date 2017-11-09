@@ -57,7 +57,7 @@ func NewWatcher(resource CustomResource, namespace string, handlers cache.Resour
 // Watch begins watching the custom resource (TPR/CRD). The call will block until a Done signal is raised during in the context.
 // When the watch has detected a create, update, or delete event, it will handled by the functions in the resourceEventHandlers. After the callback returns, the watch loop will continue for the next event.
 // If the callback returns an error, the error will be logged.
-func (w *ResourceWatcher) Watch(objType runtime.Object, done chan struct{}) error {
+func (w *ResourceWatcher) Watch(objType runtime.Object, done <-chan struct{}) error {
 	if w.namespace == v1.NamespaceAll {
 		logger.Infof("start watching %s resource in all namespaces at %s", w.resource.Name, w.resource.Version)
 	} else {
