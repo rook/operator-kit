@@ -23,7 +23,6 @@ package operatorkit
 import (
 	"errors"
 
-	"k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/rest"
@@ -58,12 +57,6 @@ func NewWatcher(resource CustomResource, namespace string, handlers cache.Resour
 // When the watch has detected a create, update, or delete event, it will handled by the functions in the resourceEventHandlers. After the callback returns, the watch loop will continue for the next event.
 // If the callback returns an error, the error will be logged.
 func (w *ResourceWatcher) Watch(objType runtime.Object, done <-chan struct{}) error {
-	if w.namespace == v1.NamespaceAll {
-		logger.Infof("start watching %s resource in all namespaces at %s", w.resource.Name, w.resource.Version)
-	} else {
-		logger.Infof("start watching %s resource in namespace %s at %s", w.resource.Name, w.namespace, w.resource.Version)
-	}
-
 	source := cache.NewListWatchFromClient(
 		w.client,
 		w.resource.Plural,

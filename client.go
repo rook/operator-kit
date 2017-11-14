@@ -21,7 +21,6 @@ which also has the apache 2.0 license.
 package operatorkit
 
 import (
-	"github.com/coreos/pkg/capnslog"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/runtime/serializer"
@@ -31,8 +30,6 @@ import (
 const (
 	serverVersionV170 = "v1.7.0"
 )
-
-var logger = capnslog.NewPackageLogger("github.com/rook/operator-kit", "opkit")
 
 // NewHTTPClient creates a Kubernetes client to interact with API extensions for Custom Resources
 func NewHTTPClient(group, version string, schemeBuilder runtime.SchemeBuilder) (rest.Interface, *runtime.Scheme, error) {

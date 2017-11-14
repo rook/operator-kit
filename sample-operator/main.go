@@ -27,7 +27,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/coreos/pkg/capnslog"
 	opkit "github.com/rook/operator-kit"
 	"k8s.io/api/core/v1"
 	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
@@ -35,22 +34,20 @@ import (
 	"k8s.io/client-go/rest"
 )
 
-var logger = capnslog.NewPackageLogger("github.com/rook/operator-kit", "sample")
-
 func main() {
-	logger.Infof("Getting kubernetes context")
+	fmt.Println("Getting kubernetes context")
 	context, err := createContext()
 	if err != nil {
-		logger.Errorf("failed to create context. %+v\n", err)
+		fmt.Printf("failed to create context. %+v\n", err)
 		os.Exit(1)
 	}
 
 	// Create and wait for CRD resources
-	logger.Infof("Creating the sample resource")
+	fmt.Println("Creating the sample resource")
 	resources := []opkit.CustomResource{sampleResource}
 	err = opkit.CreateCustomResources(*context, resources)
 	if err != nil {
-		logger.Errorf("failed to create custom resource. %+v", err)
+		fmt.Printf("failed to create custom resource. %+v\n", err)
 		os.Exit(1)
 	}
 
@@ -60,14 +57,14 @@ func main() {
 	signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
 
 	// start watching the sample resource
-	logger.Infof("Managing the sample resource")
+	fmt.Println("Managing the sample resource")
 	controller := newSampleController(context)
 	controller.StartWatch(v1.NamespaceAll, stopChan)
 
 	for {
 		select {
 		case <-signalChan:
-			logger.Infof("shutdown signal received, exiting...")
+			fmt.Println("shutdown signal received, exiting...")
 			close(stopChan)
 			return
 		}

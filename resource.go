@@ -81,14 +81,12 @@ func CreateCustomResources(context Context, resources []CustomResource) error {
 		for _, resource := range resources {
 			err = createCRD(context, resource)
 			if err != nil {
-				logger.Errorf("failed to create resource %s. %+v", resource.Name, err)
 				lastErr = err
 			}
 		}
 
 		for _, resource := range resources {
 			if err := waitForCRDInit(context, resource); err != nil {
-				logger.Errorf("failed to complete init %s. %+v", resource.Name, err)
 				lastErr = err
 			}
 		}
@@ -97,14 +95,12 @@ func CreateCustomResources(context Context, resources []CustomResource) error {
 		for _, resource := range resources {
 			err = createTPR(context, resource)
 			if err != nil {
-				logger.Errorf("failed to create resource %s. %+v", resource.Name, err)
 				lastErr = err
 			}
 		}
 
 		for _, resource := range resources {
 			if err := waitForTPRInit(context, resource); err != nil {
-				logger.Errorf("failed to complete init %s. %+v", resource.Name, err)
 				lastErr = err
 			}
 		}
@@ -113,7 +109,6 @@ func CreateCustomResources(context Context, resources []CustomResource) error {
 }
 
 func createCRD(context Context, resource CustomResource) error {
-	logger.Infof("creating %s CRD", resource.Name)
 	crdName := fmt.Sprintf("%s.%s", resource.Plural, resource.Group)
 	crd := &apiextensionsv1beta1.CustomResourceDefinition{
 		ObjectMeta: metav1.ObjectMeta{
@@ -136,7 +131,6 @@ func createCRD(context Context, resource CustomResource) error {
 		if !errors.IsAlreadyExists(err) {
 			return fmt.Errorf("failed to create %s CRD. %+v", resource.Name, err)
 		}
-		logger.Infof("CRD %s already exists", resource.Name)
 	}
 	return nil
 }
@@ -156,7 +150,7 @@ func waitForCRDInit(context Context, resource CustomResource) error {
 				}
 			case apiextensionsv1beta1.NamesAccepted:
 				if cond.Status == apiextensionsv1beta1.ConditionFalse {
-					logger.Errorf("Name conflict: %v\n", cond.Reason)
+					return false, fmt.Errorf("Name conflict: %v\n", cond.Reason)
 				}
 			}
 		}
@@ -165,7 +159,6 @@ func waitForCRDInit(context Context, resource CustomResource) error {
 }
 
 func createTPR(context Context, resource CustomResource) error {
-	logger.Infof("creating %s TPR", resource.Name)
 	tprName := fmt.Sprintf("%s.%s", resource.Name, resource.Group)
 	tpr := &v1beta1.ThirdPartyResource{
 		ObjectMeta: metav1.ObjectMeta{
@@ -181,7 +174,6 @@ func createTPR(context Context, resource CustomResource) error {
 		if !errors.IsAlreadyExists(err) {
 			return fmt.Errorf("failed to create %s TPR. %+v", resource.Name, err)
 		}
-		logger.Infof("TPR %s already exists", resource.Name)
 	}
 	return nil
 }

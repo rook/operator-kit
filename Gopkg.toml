@@ -22,9 +22,6 @@
 
 
 [[constraint]]
-  name = "github.com/coreos/pkg"
-
-[[constraint]]
   name = "github.com/stretchr/testify"
 
 [[constraint]]
