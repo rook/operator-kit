@@ -13,16 +13,6 @@
   revision = "5bd2802263f21d8788851d5305584c82a5c75d7e"
 
 [[projects]]
-  name = "github.com/coreos/go-systemd"
-  packages = ["journal"]
-  revision = "1f9909e51b2dab2487c26d64c8f2e7e580e4c9f5"
-
-[[projects]]
-  name = "github.com/coreos/pkg"
-  packages = ["capnslog"]
-  revision = "fa29b1d70f0beaddd4c7021607cc3c3be8ce94b8"
-
-[[projects]]
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
   revision = "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d"
@@ -173,6 +163,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "d8db4e31db196850ed83c05c1c0a976997c27571a09b8b329601b39aef1d3ebe"
+  inputs-digest = "c91e408dd8effc4ed5df1bee56631bc02c8e3628b2de0aa5d834f98c76a5f1bf"
   solver-name = "gps-cdcl"
   solver-version = 1

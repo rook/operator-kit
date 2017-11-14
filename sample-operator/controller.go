@@ -78,16 +78,16 @@ func (c *SampleController) onAdd(obj interface{}) {
 	}
 	sampleCopy := copyObj.(*Sample)
 
-	logger.Infof("Added Sample '%s' with Hello=%s!", sampleCopy.Name, sampleCopy.Spec.Hello)
+	fmt.Printf("Added Sample '%s' with Hello=%s!\n", sampleCopy.Name, sampleCopy.Spec.Hello)
 }
 
 func (c *SampleController) onUpdate(oldObj, newObj interface{}) {
 	oldSample := oldObj.(*Sample)
 	newSample := newObj.(*Sample)
-	logger.Infof("Updated sample '%s' from %s to %s!", newSample.Name, oldSample.Spec.Hello, newSample.Spec.Hello)
+	fmt.Printf("Updated sample '%s' from %s to %s!\n", newSample.Name, oldSample.Spec.Hello, newSample.Spec.Hello)
 }
 
 func (c *SampleController) onDelete(obj interface{}) {
 	sample := obj.(*Sample)
-	logger.Infof("Deleted sample '%s' with Hello=%s!", sample.Name, sample.Spec.Hello)
+	fmt.Printf("Deleted sample '%s' with Hello=%s!\n", sample.Name, sample.Spec.Hello)
 }
