@@ -28,6 +28,7 @@ import (
 	"time"
 
 	opkit "github.com/rook/operator-kit"
+	sample "github.com/rook/operator-kit/sample-operator/pkg/apis/myproject/v1alpha1"
 	"k8s.io/api/core/v1"
 	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/client-go/kubernetes"
@@ -44,7 +45,7 @@ func main() {
 
 	// Create and wait for CRD resources
 	fmt.Println("Creating the sample resource")
-	resources := []opkit.CustomResource{sampleResource}
+	resources := []opkit.CustomResource{sample.SampleResource}
 	err = opkit.CreateCustomResources(*context, resources)
 	if err != nil {
 		fmt.Printf("failed to create custom resource. %+v\n", err)

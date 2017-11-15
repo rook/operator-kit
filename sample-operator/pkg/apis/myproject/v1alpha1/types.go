@@ -18,7 +18,7 @@ which also has the apache 2.0 license.
 */
 
 // Package main for a sample operator
-package main
+package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -26,7 +26,11 @@ import (
 )
 
 // schemeGroupVersion is group version used to register these objects
-var schemeGroupVersion = schema.GroupVersion{Group: resourceGroup, Version: v1alpha1}
+var schemeGroupVersion = schema.GroupVersion{Group: ResourceGroup, Version: V1alpha1}
+
+// +genclient
+// +genclient:noStatus
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 type Sample struct {
 	metav1.TypeMeta   `json:",inline"`
@@ -38,7 +42,10 @@ type SampleSpec struct {
 	Hello string `json:"hello"`
 }
 
-// SampleList is the definition of a list of samples
+// +genclient
+// +genclient:noStatus
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
 type SampleList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata"`

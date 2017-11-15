@@ -25,6 +25,7 @@ rules:
 - apiGroups:
   - extensions
   resources:
+  - thirdpartyresources
   - deployments
   - daemonsets
   - replicasets
@@ -58,7 +59,7 @@ rules:
   - update
   - delete
 - apiGroups:
-  - mycompany.io
+  - myproject.io
   resources:
   - "*"
   verbs:

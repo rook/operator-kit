@@ -167,7 +167,7 @@ func createTPR(context Context, resource CustomResource) error {
 		Versions: []v1beta1.APIVersion{
 			{Name: resource.Version},
 		},
-		Description: fmt.Sprintf("ThirdPartyResource for Rook %s", resource.Name),
+		Description: fmt.Sprintf("ThirdPartyResource for %s", resource.Name),
 	}
 	_, err := context.Clientset.ExtensionsV1beta1().ThirdPartyResources().Create(tpr)
 	if err != nil {

@@ -24,15 +24,9 @@ import (
 	"fmt"
 
 	opkit "github.com/rook/operator-kit"
+	sample "github.com/rook/operator-kit/sample-operator/pkg/apis/myproject/v1alpha1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/tools/cache"
-)
-
-const (
-	customResourceName       = "sample"
-	customResourceNamePlural = "samples"
-	resourceGroup            = "mycompany.io"
-	v1alpha1                 = "v1alpha1"
 )
 
 // SampleController represents a controller object for sample custom resources
@@ -50,7 +44,7 @@ func newSampleController(context *opkit.Context) *SampleController {
 
 // Watch watches for instances of Sample custom resources and acts on them
 func (c *SampleController) StartWatch(namespace string, stopCh chan struct{}) error {
-	client, scheme, err := opkit.NewHTTPClient(resourceGroup, v1alpha1, schemeBuilder)
+	client, scheme, err := opkit.NewHTTPClient(sample.ResourceGroup, sample.V1alpha1, sample.SchemeBuilder)
 	if err != nil {
 		return fmt.Errorf("failed to get a k8s client for watching sample resources: %v", err)
 	}
@@ -61,33 +55,33 @@ func (c *SampleController) StartWatch(namespace string, stopCh chan struct{}) er
 		UpdateFunc: c.onUpdate,
 		DeleteFunc: c.onDelete,
 	}
-	watcher := opkit.NewWatcher(sampleResource, namespace, resourceHandlers, client)
-	go watcher.Watch(&Sample{}, stopCh)
+	watcher := opkit.NewWatcher(sample.SampleResource, namespace, resourceHandlers, client)
+	go watcher.Watch(&sample.Sample{}, stopCh)
 	return nil
 }
 
 func (c *SampleController) onAdd(obj interface{}) {
-	sample := obj.(*Sample)
+	s := obj.(*sample.Sample)
 
 	// Never modify objects from the store. It's a read-only, local cache.
 	// Use scheme.Copy() to make a deep copy of original object.
-	copyObj, err := c.scheme.Copy(sample)
+	copyObj, err := c.scheme.Copy(s)
 	if err != nil {
 		fmt.Printf("failed to create a deep copy of sample object: %v\n", err)
 		return
 	}
-	sampleCopy := copyObj.(*Sample)
+	sampleCopy := copyObj.(*sample.Sample)
 
 	fmt.Printf("Added Sample '%s' with Hello=%s!\n", sampleCopy.Name, sampleCopy.Spec.Hello)
 }
 
 func (c *SampleController) onUpdate(oldObj, newObj interface{}) {
-	oldSample := oldObj.(*Sample)
-	newSample := newObj.(*Sample)
+	oldSample := oldObj.(*sample.Sample)
+	newSample := newObj.(*sample.Sample)
 	fmt.Printf("Updated sample '%s' from %s to %s!\n", newSample.Name, oldSample.Spec.Hello, newSample.Spec.Hello)
 }
 
 func (c *SampleController) onDelete(obj interface{}) {
-	sample := obj.(*Sample)
-	fmt.Printf("Deleted sample '%s' with Hello=%s!\n", sample.Name, sample.Spec.Hello)
+	s := obj.(*sample.Sample)
+	fmt.Printf("Deleted sample '%s' with Hello=%s!\n", s.Name, s.Spec.Hello)
 }
