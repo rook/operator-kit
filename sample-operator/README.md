@@ -2,9 +2,13 @@
 ## Sample Operator
 The sample operator creates a custom resources and watches for changes.
 
+### Code Generation
+K8s 1.8 requires code generation for all CRDs. See the [code generation sample](code-generation.md) for the steps taken to generate the 
+necessary types for this walkthrough. You can skip those details if all you want to do is get the sample running.
+
 ### Build
 ```bash
-# pull all the libraries needed for operator-kit (this may take a while with all the Kubernetes dependencies)
+# from the root of the repo pull all the libraries needed for operator-kit (this may take a while with all the Kubernetes dependencies)
 dep ensure
 
 # change directory to sample-operator
@@ -29,9 +33,9 @@ NAME                              READY     STATUS    RESTARTS   AGE
 sample-operator-821691060-m5vqp   1/1       Running   0          3m
 
 # View the samples CRD
-$ kubectl get crd samples.mycompany.io
+$ kubectl get crd samples.myproject.io
 NAME                   KIND
-samples.mycompany.io   CustomResourceDefinition.v1beta1.apiextensions.k8s.io
+samples.myproject.io   CustomResourceDefinition.v1beta1.apiextensions.k8s.io
 ```
 
 ### Create the Sample Resource
@@ -40,9 +44,9 @@ samples.mycompany.io   CustomResourceDefinition.v1beta1.apiextensions.k8s.io
 $ kubectl create -f sample-resource.yaml
 
 # See the sample resource
-$ kubectl get samples.mycompany.io
+$ kubectl get samples.myproject.io
 NAME       KIND
-mysample   Sample.v1alpha1.mycompany.io
+mysample   Sample.v1alpha1.myproject.io
 ```
 
 ### Modify the Sample Resource
@@ -57,21 +61,16 @@ Notice the added and modified Hello= text in the log below
 
 ```bash
 $ kubectl logs -l app=sample-operator
-2017-06-29 00:11:22.738629 I | sample: Creating the sample resource
-2017-06-29 00:11:22.749325 I | op-kit: creating sample resource
-2017-06-29 00:11:22.794635 I | op-kit: did not yet find resource sample at apis/mycompany.io/v1alpha1/samples. the server could not find the requested resource
-2017-06-29 00:11:28.797620 I | op-kit: did not yet find resource sample at apis/mycompany.io/v1alpha1/samples. the server could not find the requested resource
-2017-06-29 00:11:34.797912 I | sample: Managing the sample resource
-2017-06-29 00:11:34.797932 I | sample: finding existing samples...
-2017-06-29 00:11:34.799276 I | sample: found 0 samples.
-2017-06-29 00:11:34.799296 I | op-kit: start watching sample resource in namespace default at 27064
-2017-06-29 00:12:07.605948 I | sample: Added Sample 'mysample' with Hello=World!
-2017-06-29 00:14:29.553035 I | sample: Modified Sample 'mysample' with Hello=ANOTHER World!!
+Getting kubernetes context
+Creating the sample resource
+Managing the sample resource
+Added Sample 'mysample' with Hello=world!
+Updated sample 'mysample' from world to goodbye!
 ```
 
 ### Cleanup
 ```bash
 kubectl delete -f sample-resource.yaml
 kubectl delete -f sample-operator.yaml
-kubectl delete crd samples.mycompany.io
+kubectl delete crd samples.myproject.io
 ```

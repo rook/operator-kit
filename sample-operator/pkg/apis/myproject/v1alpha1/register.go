@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 // Package main to manage a sample operator.
-package main
+package v1alpha1
 
 import (
 	"reflect"
@@ -27,16 +27,23 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
-var (
-	schemeBuilder = runtime.NewSchemeBuilder(addKnownTypes)
-	addToScheme   = schemeBuilder.AddToScheme
+const (
+	ResourceGroup            = "myproject.io"
+	V1alpha1                 = "v1alpha1"
+	customResourceName       = "sample"
+	customResourceNamePlural = "samples"
 )
 
-var sampleResource = opkit.CustomResource{
+var (
+	SchemeBuilder = runtime.NewSchemeBuilder(addKnownTypes)
+	addToScheme   = SchemeBuilder.AddToScheme
+)
+
+var SampleResource = opkit.CustomResource{
 	Name:    customResourceName,
 	Plural:  customResourceNamePlural,
-	Group:   resourceGroup,
-	Version: v1alpha1,
+	Group:   ResourceGroup,
+	Version: V1alpha1,
 	Scope:   apiextensionsv1beta1.NamespaceScoped,
 	Kind:    reflect.TypeOf(Sample{}).Name(),
 }
