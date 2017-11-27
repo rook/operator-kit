@@ -4,31 +4,9 @@ metadata:
   name: sample-operator
 rules:
 - apiGroups:
-  - ""
-  resources:
-  - namespaces
-  - serviceaccounts
-  - secrets
-  - pods
-  - services
-  - nodes
-  - configmaps
-  - events
-  verbs:
-  - get
-  - list
-  - watch
-  - patch
-  - create
-  - update
-  - delete
-- apiGroups:
   - extensions
   resources:
   - thirdpartyresources
-  - deployments
-  - daemonsets
-  - replicasets
   verbs:
   - get
   - list
@@ -45,18 +23,6 @@ rules:
   - list
   - watch
   - create
-  - delete
-- apiGroups:
-  - rbac.authorization.k8s.io
-  resources:
-  - clusterroles
-  - clusterrolebindings
-  verbs:
-  - get
-  - list
-  - watch
-  - create
-  - update
   - delete
 - apiGroups:
   - myproject.io
