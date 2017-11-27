@@ -75,5 +75,5 @@ func TestCreateTPRCustomResource(t *testing.T) {
 
 	assert.Equal(t, tprName, tpr.ObjectMeta.Name)
 	assert.Equal(t, "v1alpha", tpr.Versions[0].Name)
-	assert.Equal(t, "ThirdPartyResource for Rook example", tpr.Description)
+	assert.Equal(t, "ThirdPartyResource for example", tpr.Description)
 }
