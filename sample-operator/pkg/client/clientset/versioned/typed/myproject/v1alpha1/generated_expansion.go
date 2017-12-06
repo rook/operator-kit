@@ -17,5 +17,3 @@ limitations under the License.
 package v1alpha1
 
 type SampleExpansion interface{}
-
-type SampleListExpansion interface{}

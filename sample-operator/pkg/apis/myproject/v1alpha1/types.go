@@ -12,21 +12,12 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
-Some of the code below came from https://github.com/coreos/etcd-operator
-which also has the apache 2.0 license.
 */
 
-// Package main for a sample operator
+// Package v1alpha1 for a sample crd
 package v1alpha1
 
-import (
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime/schema"
-)
-
-// schemeGroupVersion is group version used to register these objects
-var schemeGroupVersion = schema.GroupVersion{Group: ResourceGroup, Version: V1alpha1}
+import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 // +genclient
 // +genclient:noStatus
@@ -42,8 +33,6 @@ type SampleSpec struct {
 	Hello string `json:"hello"`
 }
 
-// +genclient
-// +genclient:noStatus
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 type SampleList struct {
