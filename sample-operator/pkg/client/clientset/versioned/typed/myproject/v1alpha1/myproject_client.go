@@ -26,7 +26,6 @@ import (
 type MyprojectV1alpha1Interface interface {
 	RESTClient() rest.Interface
 	SamplesGetter
-	SampleListsGetter
 }
 
 // MyprojectV1alpha1Client is used to interact with features provided by the myproject group.
@@ -36,10 +35,6 @@ type MyprojectV1alpha1Client struct {
 
 func (c *MyprojectV1alpha1Client) Samples(namespace string) SampleInterface {
 	return newSamples(c, namespace)
-}
-
-func (c *MyprojectV1alpha1Client) SampleLists(namespace string) SampleListInterface {
-	return newSampleLists(c, namespace)
 }
 
 // NewForConfig creates a new MyprojectV1alpha1Client for the given config.

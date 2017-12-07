@@ -21,6 +21,3 @@ cd ${scriptdir}/../vendor/k8s.io/code-generator && ./generate-groups.sh \
   github.com/rook/operator-kit/sample-operator/pkg/client \
   github.com/rook/operator-kit/sample-operator/pkg/apis \
   "myproject:v1alpha1" \
-
-# workaround https://github.com/openshift/origin/issues/10357
-find ${scriptdir}/pkg/client -name "clientset_generated.go" -exec sed -i '' 's/return \&Clientset{fakePtr/return \&Clientset{\&fakePtr/g' {} +

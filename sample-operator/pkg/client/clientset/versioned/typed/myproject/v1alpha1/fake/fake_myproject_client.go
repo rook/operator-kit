@@ -30,10 +30,6 @@ func (c *FakeMyprojectV1alpha1) Samples(namespace string) v1alpha1.SampleInterfa
 	return &FakeSamples{c, namespace}
 }
 
-func (c *FakeMyprojectV1alpha1) SampleLists(namespace string) v1alpha1.SampleListInterface {
-	return &FakeSampleLists{c, namespace}
-}
-
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
 func (c *FakeMyprojectV1alpha1) RESTClient() rest.Interface {

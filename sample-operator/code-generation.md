@@ -1,7 +1,7 @@
 # CRD Code Generation
 
 Starting in Kubernetes 1.8, code can be generated for all CRDs with the same generators that are used for the built-in 
-K8s types. This takes CRDs to the next level of following the same patterns that are common to in-tree types.
+K8s resources. This takes CRDs to the next level of following the same patterns as in-tree resources.
 For more background on the code generation, see the [deep dive](https://blog.openshift.com/kubernetes-deep-dive-code-generation-customresources/).
 
 ## Directory Structure
@@ -16,7 +16,7 @@ when creating this sample walkthrough.
 
 NOTE: Blank lines are important to the code generator. Until they fix the parsing issues, it will be best if you leave the blank lines in place.
 
-1. Create the `pkg/apis/myproject/v1alpha1` folder with the remaining code files.
+1. Create the `pkg/apis/myproject/v1alpha1` folder.
 2. Create [doc.go](pkg/apis/myproject/v1alpha1/register.go) with the following contents. Notice the instructions for the code generator.
 ```go
 // +k8s:deepcopy-gen=package,register
@@ -37,7 +37,7 @@ type Sample struct {
 	Spec              SampleSpec `json:"spec"`
 }
 ```
-4. Create [register.go](pkg/apis/myproject/v1alpha1/register.go) with the CRD definition that will be used by the operator kit to register your CRD type. No code generation attributes are needed.
+4. Create [register.go](pkg/apis/myproject/v1alpha1/register.go) with the CRD definition that will register your CRD type. No code generation attributes are needed.
 
 ## Run the code generator
 During a build process, it is recommended to run the code generator to make sure you always have the latest fixes for the code generation.
