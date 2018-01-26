@@ -1,5 +1,6 @@
-
 ## Kubernetes Operator Kit
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frook%2Foperator-kit.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Frook%2Foperator-kit?ref=badge_shield)
+
 A Kubernetes Operator is a controller for custom resources. The purpose of the operator kit is to provide a common
 library for implementing operators. 
 
@@ -35,3 +36,6 @@ For filing bugs, suggesting improvements, or requesting new features, help out b
 ## Licensing
 
 The operator kit is under the Apache 2.0 license. The appropriate license information can be found in the headers of the source files.
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frook%2Foperator-kit.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frook%2Foperator-kit?ref=badge_large)
