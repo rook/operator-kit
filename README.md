@@ -1,10 +1,12 @@
 
 ## Kubernetes Operator Kit
-A Kubernetes Operator is a controller for custom resources. The purpose of the operator kit is to provide a common
-library for implementing operators. 
 
-The library originated from the Rook operator. Much more thought needs to be put into API design, but at least provides the basis for the library with working code.
-With enough interest, this could become a Kubernetes incubator project.
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frook%2Foperator-kit.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Frook%2Foperator-kit?ref=badge_shield)
+
+A Kubernetes Operator is a controller for custom resources. The purpose of the operator kit is to provide a common
+library for implementing operators.
+
+The library originated from the Rook operator but is independent. Much more thought needs to be put into API design, but at least provides the basis for the library with working code.
 
 ### Features
 The operator kit is a simple collection of features that will be useful for operators.
@@ -13,8 +15,8 @@ The operator kit is a simple collection of features that will be useful for oper
 - **Timing**: helpers to timeout when taking too long or retry when when working with kubernetes resources
 
 
-### Roadmap 
-The operator kit is still in its infancy and needs plenty of work before it is considered stable. 
+### Roadmap
+The operator kit is still in its infancy and needs plenty of work before it is considered stable.
 - Community collaboration on the requirements and design
 - Leader election for HA
 - Tests
@@ -34,4 +36,6 @@ For filing bugs, suggesting improvements, or requesting new features, help out b
 
 ## Licensing
 
-The operator kit is under the Apache 2.0 license. The appropriate license information can be found in the headers of the source files.
+The operator kit is under the Apache 2.0 license.
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frook%2Foperator-kit.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frook%2Foperator-kit?ref=badge_large)
