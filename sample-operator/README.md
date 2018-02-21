@@ -18,6 +18,7 @@ cd sample-operator
 CGO_ENABLED=0 GOOS=linux go build
 
 # build the docker container
+# Note: If you are using minikube, don't forget to run "eval $(minikube docker-env)" first!
 docker build -t sample-operator:0.1 .
 ```
 
