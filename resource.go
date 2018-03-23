@@ -54,6 +54,9 @@ type CustomResource struct {
 
 	// Kind is the serialized interface of the resource.
 	Kind string
+
+	// ShortNames is the shortened version of the resource
+	ShortNames []string
 }
 
 // Context hold the clientsets used for creating and watching custom resources
@@ -119,9 +122,10 @@ func createCRD(context Context, resource CustomResource) error {
 			Version: resource.Version,
 			Scope:   resource.Scope,
 			Names: apiextensionsv1beta1.CustomResourceDefinitionNames{
-				Singular: resource.Name,
-				Plural:   resource.Plural,
-				Kind:     resource.Kind,
+				Singular:   resource.Name,
+				Plural:     resource.Plural,
+				Kind:       resource.Kind,
+				ShortNames: resource.ShortNames,
 			},
 		},
 	}
