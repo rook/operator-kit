@@ -18,6 +18,7 @@ limitations under the License.
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"os/signal"
@@ -31,11 +32,21 @@ import (
 	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
+var (
+	kubeconfig string
+)
+
+func init() {
+	flag.StringVar(&kubeconfig, "kubeconfig", "", "Path to KUBECONFIG for running out of cluster. (Default: null)")
+}
+
 func main() {
+	flag.Parse()
 	fmt.Println("Getting kubernetes context")
-	context, sampleClientset, err := createContext()
+	context, sampleClientset, err := createContext(kubeconfig)
 	if err != nil {
 		fmt.Printf("failed to create context. %+v\n", err)
 		os.Exit(1)
@@ -70,8 +81,15 @@ func main() {
 	}
 }
 
-func createContext() (*opkit.Context, sampleclient.MyprojectV1alpha1Interface, error) {
-	config, err := rest.InClusterConfig()
+func getClientConfig(kubeconfig string) (*rest.Config, error) {
+	if kubeconfig != "" {
+		return clientcmd.BuildConfigFromFlags("", kubeconfig)
+	}
+	return rest.InClusterConfig()
+}
+
+func createContext(kubeconfig string) (*opkit.Context, sampleclient.MyprojectV1alpha1Interface, error) {
+	config, err := getClientConfig(kubeconfig)
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to get k8s config. %+v", err)
 	}
