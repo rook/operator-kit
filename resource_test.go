@@ -24,7 +24,6 @@ import (
 	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	apiextensionsclientfake "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset/fake"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes/fake"
 )
 
 var exampleResource = CustomResource{
@@ -57,23 +56,4 @@ func TestCreateCRDCustomResource(t *testing.T) {
 	assert.Equal(t, "example.com", crd.Spec.Group)
 	assert.Equal(t, "v1alpha", crd.Spec.Version)
 	assert.Equal(t, apiextensionsv1beta1.NamespaceScoped, crd.Spec.Scope)
-}
-
-func TestCreateTPRCustomResource(t *testing.T) {
-	ctx := Context{
-		Clientset: fake.NewSimpleClientset(),
-		Interval:  100 * time.Millisecond,
-		Timeout:   1 * time.Second,
-	}
-
-	err := createTPR(ctx, exampleResource)
-	assert.NoError(t, err)
-
-	tprName := fmt.Sprintf("%s.%s", exampleResource.Name, exampleResource.Group)
-	tpr, err := ctx.Clientset.ExtensionsV1beta1().ThirdPartyResources().Get(tprName, metav1.GetOptions{})
-	assert.NoError(t, err)
-
-	assert.Equal(t, tprName, tpr.ObjectMeta.Name)
-	assert.Equal(t, "v1alpha", tpr.Versions[0].Name)
-	assert.Equal(t, "ThirdPartyResource for example", tpr.Description)
 }
