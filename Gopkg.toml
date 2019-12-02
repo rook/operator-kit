@@ -27,28 +27,28 @@ required = ["k8s.io/code-generator/cmd/client-gen"]
 
 [[override]]
   name = "k8s.io/kubernetes"
-  version = "=v1.14.1"
+  version = "=v1.16.3"
 
 [[constraint]]
   name = "k8s.io/api"
-  version = "kubernetes-1.14.1"
+  version = "kubernetes-1.16.3"
 
 [[constraint]]
   name = "k8s.io/apiextensions-apiserver"
-  version = "kubernetes-1.14.1"
+  version = "kubernetes-1.16.3"
 
 [[constraint]]
   name = "k8s.io/apimachinery"
-  version = "kubernetes-1.14.1"
+  version = "kubernetes-1.16.3"
 
 [[override]]
   name = "k8s.io/apiserver"
-  version = "kubernetes-1.14.1"
+  version = "kubernetes-1.16.3"
 
 [[constraint]]
   name = "k8s.io/client-go"
-  version = "v11.0.0"
+  version = "kubernetes-1.16.3"
 
 [[constraint]]
   name = "k8s.io/code-generator"
-  version = "kubernetes-1.14.1"
+  version = "kubernetes-1.16.3"
