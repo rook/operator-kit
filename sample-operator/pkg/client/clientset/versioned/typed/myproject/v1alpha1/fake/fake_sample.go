@@ -119,7 +119,7 @@ func (c *FakeSamples) DeleteCollection(options *v1.DeleteOptions, listOptions v1
 // Patch applies the patch and returns the patched sample.
 func (c *FakeSamples) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1alpha1.Sample, err error) {
 	obj, err := c.Fake.
-		Invokes(testing.NewPatchSubresourceAction(samplesResource, c.ns, name, data, subresources...), &v1alpha1.Sample{})
+		Invokes(testing.NewPatchSubresourceAction(samplesResource, c.ns, name, pt, data, subresources...), &v1alpha1.Sample{})
 
 	if obj == nil {
 		return nil, err
