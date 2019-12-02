@@ -51,12 +51,15 @@ subjects:
   name: sample-operator
   namespace: default
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sample-operator
   namespace: default
 spec:
+  selector:
+    matchLabels:
+      app: sample-operator
   replicas: 1
   template:
     metadata:
