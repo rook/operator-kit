@@ -1,7 +1,7 @@
 
 ## Kubernetes Operator Kit
 
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frook%2Foperator-kit.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Frook%2Foperator-kit?ref=badge_shield)
+> **This repo is deprecated in favor of other libraries and tools such as the [Controller Runtime](https://github.com/kubernetes-sigs/controller-runtime) or [Operator SDK](https://sdk.operatorframework.io/)**.
 
 A Kubernetes Operator is a controller for custom resources. The purpose of the operator kit is to provide a common
 library for implementing operators.
